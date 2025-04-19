@@ -2,6 +2,7 @@ import torch
 import numpy as np
 import kaiwu as kw
 from icecream import ic
+import torch.multiprocessing as mp
 
 DEFAULT_ARGS_MODEL = {
     # soft selection
@@ -49,7 +50,6 @@ class Solver:
         # no batch for parallel
         # J: [t, n, n]
         # h: [t, n]
-        
         t, n, _ = J.shape
         q = self.args_model['num_soft_selection_qubit']
         
@@ -87,7 +87,17 @@ class Solver:
         sol_dict, _ = worker.solve_qubo(qubo_model)
         x = kw.qubo.get_array_val(x, sol_dict)
         return x    
-        
+    
+    def _warpper_parallel_solve_step(self, J: np.ndarray, h: np.ndarray) -> np.ndarray:
+        batch = J.shape[0]
+        results = []
+        for b in range(batch):
+            J_b = J[b, :, :, :]
+            h_b = h[b, :, :]
+            x = self._solve_step(J_b, h_b)
+            results.append(x)
+        results = np.stack(results, axis=0)
+        return results
     
     def solve(self, J: np.ndarray, h: np.ndarray) -> np.ndarray:
         if self.args_solver['batch_num_process'] == 1:
@@ -97,7 +107,22 @@ class Solver:
                 results.append(self._solve_step(J[b, :, :, :], h[b, :, :]))
             results = np.stack(results, axis=0)
             return results
-        
+        else:
+            batch = J.shape[0]
+            num_process = self.args_solver['batch_num_process'] if batch > self.args_solver['batch_num_process'] else batch
+            
+            chunk_size = (batch + num_process - 1) // num_process
+            input_list = [(J[i * chunk_size: min((i + 1) * chunk_size, batch), :, :, :], 
+                           h[i * chunk_size: min((i + 1) * chunk_size, batch), :, :], 
+                          ) for i in range(num_process)]
+            
+            with mp.Pool(num_process) as pool:
+                results = pool.starmap_async(self._warpper_parallel_solve_step, input_list).get()
+                pool.close()
+                pool.join()
+            results = np.concatenate(results, axis=0)
+            return results
+                    
     
     def energy_function(self, J: torch.Tensor, h: torch.Tensor, x: np.ndarray) -> torch.Tensor:
         # J: [b, t, n, n]

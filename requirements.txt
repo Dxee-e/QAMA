@@ -1,0 +1,12 @@
+QAMA
+
+conda create -n QAMA python==3.8.20
+
+pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu124
+
+# register and get kaiwu sdk [optional]
+pip install kaiwu-1.1.2-py3-none-any.whl
+
+
+# develop
+pip install icecream pytest black isort
