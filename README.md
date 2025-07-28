@@ -1,2 +1,2 @@
 # QAMA
-Paper Code
+The Full Code Will Be Updated After Acceptance.
