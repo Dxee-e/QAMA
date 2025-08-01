@@ -1,0 +1,10 @@
+Average time for each solver:
+c_sa forward: 1.2844 seconds
+c_sa backward: 0.0014 seconds
+c_sa total: 6.4290 seconds
+montecarlo_greedy forward: 0.5033 seconds
+montecarlo_greedy backward: 0.0006 seconds
+montecarlo_greedy total: 2.5194 seconds
+hybird forward: 1.7860 seconds
+hybird backward: 0.0007 seconds
+hybird total: 8.9332 seconds

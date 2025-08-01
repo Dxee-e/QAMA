@@ -1,0 +1,47 @@
+input_data:
+  batch_size: 128
+  num_heads: 8
+  seq_length: 49
+  d_model: 512
+  embed_dim: 64
+  
+test:
+  repeat: 5
+  seed: 55555
+  device: 'cuda:0'
+
+solvers:
+  c_sa:
+    initial_temperature: 1000.0
+    alpha: 0.99
+    cutoff_temperature: 0.001
+    iterations_per_t: 5
+    patience: 50
+    is_local_search: True
+    flag_evolution_history: False
+    history_file_path: ""
+    rand_seed: null
+    is_input_check: False
+  # gurobi:
+  #   batch_num_process: 4
+  #   timeout: 10
+  #   mipgap: 0.01
+  #   gurobi_num_threads: 1
+  # kaiwu_sa:
+  #   user_id: '69878024601862146'
+  #   sdk_code: '0i4T6LY1XygfwN3MWa8Fjq27OaT0sq'
+  #   batch_num_process: 4
+  #   timeout: 10
+  #   initial_temperature: 100
+  #   alpha: 0.99
+  #   cutoff_temperature: 0.001
+  #   iterations_per_t: 10
+  #   size_limit: 10
+  #   rand_seed: null
+  #   sa_num_process: 1
+  montecarlo_greedy:
+    sample_num: 200
+    seed: 0
+    iterations: 3
+    device: 'cuda:0'
+  hybird: {}

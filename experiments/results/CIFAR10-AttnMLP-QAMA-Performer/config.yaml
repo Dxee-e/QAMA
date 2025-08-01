@@ -1,0 +1,29 @@
+base:
+# define base config
+  dataset: CIFAR10
+  model: AttnMLP
+  QAMA: True
+
+# backend setting
+backend_solver:
+  solver: "Performer"
+
+# model setting
+model_setting:
+  image_size: [32, 32]
+  patch_size: [4, 4]
+  num_classes: 10
+  dim: 64
+  depth: 1
+  heads: 8
+  mlp_dim: 64
+  dim_head: 8
+  channels: 3
+
+# train setting
+train_setting:
+  batch_size: 128
+  num_epochs: 50
+  learning_rate: 0.001
+  device: 'cuda:0'
+  seed: 42

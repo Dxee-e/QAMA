@@ -1,0 +1,1 @@
+find . -name "test_config.yaml" -exec python test_time.py {} \;

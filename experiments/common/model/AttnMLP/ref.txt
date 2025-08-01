@@ -1,0 +1,6 @@
+Simple MLP + Attention Architecture
+
+Available Attention Modules:
+
+1. Attention: Original Attention 
+1. QAMA_C_SA: Quantum Annealing Multi-head Attention by C_SA solver

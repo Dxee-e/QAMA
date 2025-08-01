@@ -1,4 +1,24 @@
-# QAMA
-The Full Code Will Be Updated After Acceptance.
+# QAMA: Scalable Quantum Annealing Multi‑Head Attention Operator for Deep Learning
 
-Test
+
+### Installation and Setup
+
+1. Install [Miniconda](https://docs.conda.io/en/latest/miniconda.html) or [Anaconda](https://www.anaconda.com/).
+
+2. Clone this repository:
+
+3. Install the requirement.txt
+
+4. Install QAMA package
+
+    ```bash
+    cd QAMA
+    pip install -e .
+    ```
+
+5. (Optional) Compile C_SA solver by cmake and make.
+
+
+### Note
+
+Large files will be uploaded in soon.
